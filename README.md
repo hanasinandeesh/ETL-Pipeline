@@ -12,17 +12,20 @@ This project demonstrates an ETL (Extract, Transform, Load) pipeline implemented
 ### 1. ETL Pipeline Successful Run:
 Here is an image showing the successful run of the ETL pipeline:
 
-<img width="664" alt="Screenshot 2024-12-07 004128" src="https://github.com/user-attachments/assets/94670cd6-c855-4c8c-9323-72447b7eee9f">
+<img width="864" alt="Screenshot 2024-12-07 010252" src="https://github.com/user-attachments/assets/26c64e04-0529-4071-8be8-979085218696">
+
 
 ### 2. Loaded Data Display:
 This image shows the loaded data displayed from the SQLite database:
 
-<img width="658" alt="Screenshot 2024-12-07 004152" src="https://github.com/user-attachments/assets/42cbd2bd-bfaa-4ca0-80b0-cf81bd88ec84">
+<img width="704" alt="Screenshot 2024-12-07 010639" src="https://github.com/user-attachments/assets/52abe68b-1318-4731-857b-d3a1c4108338">
+
 
 ### 3. Query and Data in SQLite:
 Here is an image showing a query run on the SQLite database to retrieve the loaded data:
 
-<img width="627" alt="Screenshot 2024-12-07 004258" src="https://github.com/user-attachments/assets/aed18e29-cd03-4f49-8b4f-7968cc945f37">
+<img width="634" alt="Screenshot 2024-12-07 010537" src="https://github.com/user-attachments/assets/bee5814f-d456-4671-8cfb-43ab89dd280b">
+
 
 
 ## Technologies Used
