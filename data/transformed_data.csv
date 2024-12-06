@@ -1,4 +1,4 @@
-variety,avg_petal_length
-Setosa,1.6625
-Versicolor,4.79375
-Virginica,5.138709677419355
+variety,total_petal_length,avg_petal_length,count,max_petal_length,min_petal_length,std_petal_length
+Setosa,13.3,1.6625,8,1.7,1.6,0.05175491695067649
+Versicolor,153.4,4.79375,32,6.6,3.5,0.7678783085712171
+Virginica,159.3,5.138709677419355,31,5.9,4.2,0.38788092619156406
