@@ -43,7 +43,7 @@ The dataset used in this project is the Iris dataset. It contains the following 
 - `variety`: Species of the Iris plant (Setosa, Versicolor, or Virginica).
 
 ### Source:
-- **Original Dataset**: The Iris dataset is publicly available. You can find it on [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/iris).
+- **Original Dataset**: The Iris dataset is publicly available. You can find it on [UCI Machine Learning Repository](https://gist.github.com/netj/8836201/).
 
 ## Features of the ETL Pipeline
 
