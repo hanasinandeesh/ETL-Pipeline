@@ -11,7 +11,6 @@ def extract(data_path):
     """Extract data from a CSV file."""
     print("Extracting data from CSV...")
     try:
-        # Read the CSV file into a DataFrame
         df = pd.read_csv(data_path)
         print("Data extraction successful.")
         print("Columns in the dataset:", df.columns)  # Log columns to check
@@ -29,15 +28,21 @@ def transform(df):
         if 'petal.length' not in df.columns:
             raise Exception("'petal.length' column not found in the dataset.")
 
-        # Remove rows with missing data
+        # Remove missing values
         df_cleaned = df.dropna()
 
         # Filter rows where petal.length > 1.5
         df_filtered = df_cleaned[df_cleaned['petal.length'] > 1.5]
 
-        # Aggregate: Average petal length by species
-        df_aggregated = df_filtered.groupby('variety', as_index=False)['petal.length'].mean()
-        df_aggregated.rename(columns={'petal.length': 'avg_petal_length'}, inplace=True)
+        # Perform different aggregations
+        df_aggregated = df_filtered.groupby('variety').agg(
+            total_petal_length=('petal.length', 'sum'),
+            avg_petal_length=('petal.length', 'mean'),
+            count=('petal.length', 'count'),
+            max_petal_length=('petal.length', 'max'),
+            min_petal_length=('petal.length', 'min'),
+            std_petal_length=('petal.length', 'std')
+        ).reset_index()
 
         print("Data transformation successful.")
         return df_aggregated
@@ -48,11 +53,11 @@ def load(df, transformed_path, db_path):
     """Load data into a SQLite database and save the transformed CSV."""
     print("Loading data into SQLite database and saving transformed CSV...")
     try:
-        # Save transformed data into CSV
+        # Save to transformed CSV
         df.to_csv(transformed_path, index=False)
         print(f"Transformed data saved to {transformed_path}")
 
-        # Load data into SQLite database
+        # Load into SQLite database
         conn = sqlite3.connect(db_path)
         cursor = conn.cursor()
 
@@ -61,17 +66,30 @@ def load(df, transformed_path, db_path):
         cursor.execute('''
         CREATE TABLE iris_aggregated (
             species TEXT PRIMARY KEY,
-            avg_petal_length REAL
+            total_petal_length REAL,
+            avg_petal_length REAL,
+            count INTEGER,
+            max_petal_length REAL,
+            min_petal_length REAL,
+            std_petal_length REAL
         )
         ''')
 
-        # Insert the transformed data into the database
-        df.to_sql('iris_aggregated', conn, if_exists='replace', index=False)
+        # Insert data into SQLite table
+        for index, row in df.iterrows():
+            cursor.execute("INSERT INTO iris_aggregated (species, total_petal_length, avg_petal_length, count, max_petal_length, min_petal_length, std_petal_length) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                           (row['variety'], row['total_petal_length'], row['avg_petal_length'], row['count'], row['max_petal_length'], row['min_petal_length'], row['std_petal_length']))
 
-        # Verify the data
+        # Verify the data with cleaner output format
         print("Data loaded into the database. Verifying:")
-        for row in cursor.execute("SELECT * FROM iris_aggregated"):
-            print(row)
+        cursor.execute("SELECT * FROM iris_aggregated")
+        rows = cursor.fetchall()
+        
+        # Display the data in a clean, formatted way
+        print(f"{'Species':<15} {'Total Petal Length':<20} {'Avg Petal Length':<20} {'Count':<10} {'Max Petal Length':<20} {'Min Petal Length':<20} {'Std Petal Length':<20}")
+        print("-" * 130)  # Separator for better readability
+        for row in rows:
+            print(f"{row[0]:<15} {row[1]:<20} {row[2]:<20} {row[3]:<10} {row[4]:<20} {row[5]:<20} {row[6]:<20}")
 
         conn.commit()
         conn.close()
@@ -82,19 +100,18 @@ def load(df, transformed_path, db_path):
 def main():
     """Main function to execute the ETL pipeline."""
     try:
-        # Extract the dataset
+        # Extract
         df = extract(data_path)
 
-        # Transform the dataset
+        # Transform
         transformed_df = transform(df)
 
-        # Load the transformed data into the database and save as CSV
+        # Load
         load(transformed_df, transformed_path, db_path)
 
         print("ETL pipeline completed successfully!")
     except Exception as e:
         print(f"ETL pipeline failed: {e}")
 
-# Run the ETL pipeline
 if __name__ == "__main__":
     main()
