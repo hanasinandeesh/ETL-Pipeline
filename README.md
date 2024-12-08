@@ -31,19 +31,11 @@ Here is an image showing a query run on the SQLite database to retrieve the load
 ## Technologies Used
 - **Python**: Programming language used to implement the ETL pipeline.
 - **Pandas**: Library used for data manipulation and transformation.
-- **SQLite**: Database used for storing the transformed data.
 - **SQLite3**: Python library to interact with SQLite databases.
 
-## Dataset
-The dataset used in this project is the Iris dataset. It contains the following columns:
-- `sepal.length`: Sepal length in cm.
-- `sepal.width`: Sepal width in cm.
-- `petal.length`: Petal length in cm.
-- `petal.width`: Petal width in cm.
-- `variety`: Species of the Iris plant (Setosa, Versicolor, or Virginica).
 
 ### Source:
-- **Original Dataset**: The Iris dataset is publicly available. You can find it on [UCI Machine Learning Repository](https://gist.github.com/netj/8836201/).
+- **Original Dataset**: The Iris dataset is publicly available. [UCI Machine Learning Repository](https://gist.github.com/netj/8836201/).
 
 ## Features of the ETL Pipeline
 
@@ -59,7 +51,7 @@ The dataset used in this project is the Iris dataset. It contains the following 
 ## Getting Started
 
 ### Prerequisites
-To run this ETL pipeline locally, you'll need Python and the following libraries:
+To run this ETL pipeline locally, we need Python and the following libraries:
 - `pandas`
 - `sqlite3`
 
